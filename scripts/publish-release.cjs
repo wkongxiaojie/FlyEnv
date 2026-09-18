@@ -29,16 +29,19 @@ if (!token) {
 
 const owner = 'wkongxiaojie';
 const repo = 'FlyEnv';
-const tag = 'v4.18.4';
-const releaseName = 'FlyEnv v4.18.4';
-const releaseBody = `## 🚀 FlyEnv v4.18.4
+const pkgPath = path.join(__dirname, '../package.json');
+const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+const currentVersion = pkg.version;
+const tag = `v${currentVersion}`;
+const releaseName = `FlyEnv v${currentVersion}`;
+const releaseBody = `## 🚀 FlyEnv v${currentVersion}
 
-### 新特性与更新内容：
-1. **专属 GitHub OAuth 认证接入**：替换为独立维护的 GitHub OAuth App，实现去中心化授权与账号管理。
-2. **全新 RSA 2048 许可证体系**：升级为高强度 RSA 2048 非对称加密算法，实现一机一码永久专属授权。
-3. **云端自动下发与离线兜底**：客户端启动/刷新时自动从项目仓库 \`licenses.json\`（及国内镜像源）下发激活码；安装包内置离线映射，免网初次安装即激活。
-4. **手动激活与体验优化**：在【设置 -> 许可证】新增一键复制本机 UUID、手动粘贴激活码即时激活以及从 GitHub 同步授权。
-5. **强化许可证权限限制（合规性保障）**：未激活设备全面拦截站点、多语言项目管理与高级工具试用，必须拥有合法许可证才可使用。
+### 核心更新与修复内容：
+1. **许可证手动激活与弹窗彻底修复**：修复在手动输入激活码时因 IPC 进度状态包被误判为失败而引发 \`[object Object]\` 弹窗的问题，确保秒级即时校验与激活。
+2. **新增一键【清除许可证】功能**：在【设置 → 许可证】界面卡片与操作栏提供清除许可证操作并带二次确认，便于测试未激活限制环境。
+3. **主动停用状态保护机制**：用户手动清除许可证后，系统自动记录停用状态，在主动点击【立即激活】或【从 GitHub 同步授权】前不强制静默恢复激活。
+4. **规范“请求许可证”流程至 GitHub Issues**：点击后直接跳转至项目官方 GitHub Issue 申请页面并携带机器识别码 UUID，透明直观。
+5. **优化进程间许可证状态同步**：平滑同步许可证至主进程全局配置，保障各服务模块一致性。
 `;
 
 function request(options, data) {
@@ -158,7 +161,7 @@ async function main() {
 
   const files = fs.readdirSync(releaseDir);
   const targetFiles = files.filter(
-    (f) => (f.includes('4.18.4') && (f.endsWith('.exe') || f.endsWith('.blockmap'))) || f === 'latest.yml'
+    (f) => (f.includes(currentVersion) && (f.endsWith('.exe') || f.endsWith('.blockmap') || f.endsWith('.dmg') || f.endsWith('.deb') || f.endsWith('.rpm'))) || f.endsWith('.yml')
   );
   
   if (targetFiles.length === 0) {

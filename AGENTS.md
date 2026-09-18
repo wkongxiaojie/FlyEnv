@@ -4,7 +4,7 @@
 
 **FlyEnv** is an All-In-One Full-Stack Environment Management Tool built with Electron and Vue 3. It provides a lightweight, modular development environment manager for Windows, macOS, and Linux, allowing developers to install and manage Apache, PHP, Node.js, Python, databases, and more—running natively without Docker.
 
-- **Version**: 4.18.4
+- **Version**: 4.18.5
 - **Electron Version**: 39.8.10
 - **License**: MIT
 - **Author**: Pengfei Xu

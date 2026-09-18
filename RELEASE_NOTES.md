@@ -2,6 +2,31 @@
 
 All notable changes to FlyEnv will be documented in this file.
 
+## [4.18.5] - 2026-09-18
+
+# **FlyEnv v4.18.5 Update Release Notes**
+
+## **🚀 New Features & Fixes**
+
+### **1. 许可证手动激活与异常弹窗彻底修复 (License Manual Activation Fix)**
+- 修复了在手动输入激活码时因 IPC 进度状态包（`code: 200`）被错误判定为失败并引发 `[object Object]` 弹窗的问题。
+- 完善了状态消息流过滤与错误提取逻辑，确保有效激活码秒级即时校验通过，提供清晰、安全的错误反馈。
+
+### **2. 新增一键清除本地许可证功能 (Clear License Feature)**
+- 在【设置 → 许可证】界面顶部卡片和操作区域增加了红色的【清除许可证】按钮（附带二次防误触确认）。
+- 支持一键安全停用并彻底清空本地许可证缓存与配置，将客户端恢复为未激活状态，方便测试未激活功能限制及重新激活流程。
+
+### **3. 增加主动停用状态保护机制 (Active Deactivation Protection)**
+- 在用户手动清除许可证后，系统自动记录停用标记，在未显式点击【立即激活】或【从 GitHub 同步授权】前，应用启动与定时轮询不会静默恢复激活，保证测试环境状态稳定。
+
+### **4. 规范“请求许可证”流程至 GitHub Issues (GitHub Issue License Routing)**
+- 将“请求许可证”按钮改造为调用系统浏览器直接打开官方 GitHub 仓库 Issue 申请页面，并自动带上本机硬件识别码 UUID 与申请理由，流程公开透明。
+
+### **5. 优化主进程与 Fork 进程配置与许可证状态同步**
+- 改进 `IPCHandler` 处理逻辑，在许可证激活与清除时同步更新 `global.Server.Licenses` 与持久化配置，提升进程间通信与状态一致性。
+
+---
+
 ## [4.18.4] - 2026-09-18
 
 # **FlyEnv v4.18.4 Update Release Notes**
