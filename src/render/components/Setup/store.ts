@@ -72,50 +72,13 @@ export const SetupStore = defineStore('setup', {
           console.log('licensesInit: ', res)
           if (res?.code === 0) {
             const data: any = res?.data
-            if (data.requestSuccess) {
-              Object.assign(this, res?.data)
+            this.uuid = data.uuid
+            this.activeCode = data.activeCode ?? ''
+            this.isActive = !!data.isActive
+            if (this.isActive) {
               const store = AppStore()
               store.config.setup.license = this.activeCode
               store.saveConfig().then().catch()
-            } else {
-              this.uuid = data.uuid
-              this.isActive = data.isActive
-              this.activeCode = data.activeCode
-            }
-
-            if (!this.isActive) {
-              const currentTime = Math.round(new Date().getTime() / 1000)
-              const maxTime = 7 * 24 * 60 * 60
-              if (currentTime - time > maxTime) {
-                const today = new Date().toDateString()
-                const lastAlert = localStorage.getItem('flyenv-license-alert-date')
-                if (lastAlert !== today) {
-                  localStorage.setItem('flyenv-license-alert-date', today)
-                  const days = Math.floor((currentTime - time) / (24 * 60 * 60))
-                  const store = AppStore()
-                  const isZh = store.config.setup.lang?.startsWith('zh')
-                  const url = isZh
-                    ? 'https://flyenv.com/zh/guide/about-license.html'
-                    : 'https://flyenv.com/guide/about-license.html'
-                  setTimeout(() => {
-                    ElMessageBox.alert(
-                      I18nT('licenses.trialExpiredTips', { days }),
-                      I18nT('licenses.trialExpiredTitle'),
-                      {
-                        confirmButtonText: I18nT('base.confirm'),
-                        type: 'warning',
-                        showClose: false,
-                        closeOnClickModal: false,
-                        closeOnPressEscape: false
-                      }
-                    )
-                      .then(() => {
-                        shell.openExternal(url)
-                      })
-                      .catch(() => {})
-                  }, 3000)
-                }
-              }
             }
           }
           resolve()
@@ -131,18 +94,54 @@ export const SetupStore = defineStore('setup', {
         if (res?.code !== 200) {
           IPC.off(key)
         }
+        this.fetching = false
         if (res?.code === 1) {
-          this.fetching = false
           MessageError(res?.msg ?? I18nT('base.fail'))
           return
         }
         console.log('refreshState: ', res)
-        Object.assign(this, res?.data)
+        const data: any = res?.data
+        this.uuid = data?.uuid ?? this.uuid
+        this.activeCode = data?.activeCode ?? ''
+        this.isActive = !!data?.isActive
         const store = AppStore()
         store.config.setup.license = this.activeCode
         store.saveConfig().then().catch()
-        this.fetching = false
+        if (this.isActive) {
+          ElMessage.success(I18nT('licenses.licenseActivated'))
+        } else {
+          ElMessage.warning(I18nT('licenses.licenseNoActivated'))
+        }
         this.githubLicenseFetch()
+      })
+    },
+    manualActivate(code: string) {
+      if (this.fetching) {
+        return Promise.reject()
+      }
+      const trimmed = (code || '').trim()
+      if (!trimmed) {
+        MessageError(I18nT('base.fail'))
+        return Promise.reject()
+      }
+      this.fetching = true
+      return new Promise<void>((resolve, reject) => {
+        IPC.send('app-fork:app', 'licensesVerify', trimmed).then((key: string, res?: any) => {
+          IPC.off(key)
+          this.fetching = false
+          if (res?.code === 0 && res?.data?.isActive) {
+            this.activeCode = res.data.activeCode
+            this.isActive = true
+            const store = AppStore()
+            store.config.setup.license = this.activeCode
+            store.saveConfig().then().catch()
+            ElMessage.success(I18nT('licenses.licenseActivated'))
+            resolve()
+          } else {
+            MessageError(res?.msg || I18nT('base.fail'))
+            reject(new Error(res?.msg))
+          }
+        })
       })
     },
     postRequest() {

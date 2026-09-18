@@ -380,7 +380,7 @@
   const setupStore = SetupStore()
 
   const isLock = computed(() => {
-    return !setupStore.isActive && project.project.length > 2
+    return !setupStore.isActive
   })
 
   const toLicense = () => {

@@ -107,7 +107,7 @@
   })
 
   const isLock = computed(() => {
-    return !setupStore.isActive && stats.value.total >= 1
+    return !setupStore.isActive
   })
 
   const hostOptions = computed(() => {

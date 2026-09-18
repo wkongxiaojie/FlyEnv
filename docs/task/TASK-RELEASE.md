@@ -1,10 +1,10 @@
-# FlyEnv新版本4.18.3更新日志
+# FlyEnv新版本4.18.4更新日志
 
 本次更新内容：
-1. 新增新用户技术栈选择引导. 降低新用户的心智负担. 避免新用户看到这么多模块很多还用不上, 觉得FlyEnv太复杂, 而不愿使用的问题.
-2. 启动组新增拖动排序功能.
-3. 修复Windows上有些用户没有uuid导致的无法申请许可证的问题.
-4. 修复Podman参数问题.
+1. 升级全新 RSA 2048 授权验签体系与一机一码许可证限制。
+2. 接入专属 GitHub OAuth 认证系统与许可证云端自动下发/手动激活。
+3. 强化二次开发许可证合规性要求（未激活设备限制核心功能并引导激活）。
+4. 本地安装包内置永久授权支持与离线容灾。
 
 参照：
 ```
@@ -26,7 +26,7 @@ This integration provides:
 
 The same service can be reused across multiple groups, making it easy to share common infrastructure such as MySQL or Redis while keeping project-specific environments separate.
 
-Thanks to [@branll](https://github.com/branll), [@freenessfish](https://github.com/freenessfish), and [@SevenJoker](https://github.com/SevenJoker) for the feature requests! [Discussion #706](https://github.com/xpf0000/FlyEnv/discussions/706) [Issue #742](https://github.com/xpf0000/FlyEnv/issues/742) [Issue #757](https://github.com/xpf0000/FlyEnv/issues/757)
+Thanks to [@branll](https://github.com/branll), [@freenessfish](https://github.com/freenessfish), and [@SevenJoker](https://github.com/SevenJoker) for the feature requests! [Discussion #706](https://github.com/wkongxiaojie/FlyEnv/discussions/706) [Issue #742](https://github.com/wkongxiaojie/FlyEnv/issues/742) [Issue #757](https://github.com/wkongxiaojie/FlyEnv/issues/757)
 
 ---
 
@@ -38,7 +38,7 @@ Resolved an issue where long .NET preview version strings such as `11.0.100-prev
 
 Long version names are also truncated cleanly in the table and can be viewed in full by hovering over them.
 
-Thanks to [@TanNhatCMS](https://github.com/TanNhatCMS) for the contribution! [Pull Request #770](https://github.com/xpf0000/FlyEnv/pull/770)
+Thanks to [@TanNhatCMS](https://github.com/TanNhatCMS) for the contribution! [Pull Request #770](https://github.com/wkongxiaojie/FlyEnv/pull/770)
 
 ---
 
@@ -56,13 +56,13 @@ This improvement includes:
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 ```

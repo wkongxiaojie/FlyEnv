@@ -37,9 +37,9 @@ const ptyPrebuildExcludes = [
 const conf: Configuration = {
   productName: 'FlyEnv',
   executableName: 'FlyEnv',
-  buildVersion: '4.18.3',
+  buildVersion: '4.18.4',
   electronVersion: '39.8.10',
-  appId: 'phpstudy.xpfme.com',
+  appId: 'com.wkongxiaojie.flyenv',
   asar: true,
   directories: {
     output: 'release'
@@ -56,6 +56,12 @@ const conf: Configuration = {
     ...ptyPrebuildExcludes,
     // third_party/conpty is Windows-only, not needed on macOS
     '!**/node_modules/node-pty/third_party/**'
+  ],
+  extraResources: [
+    {
+      from: 'licenses.json',
+      to: 'licenses.json'
+    }
   ],
   dmg: {
     sign: false,

@@ -14,7 +14,7 @@ Elasticsearch 是一个分布式搜索和分析引擎，FlyEnv 通过封装 Elas
 相关文档链接:
 - [Base 模块](./base.md) - 服务基类，定义通用生命周期
 - [Module 系统](./module-system.md) - 前端模块架构
-- [FlyEnv 架构概述](https://deepwiki.com/xpf0000/FlyEnv/3-architecture-overview)
+- [FlyEnv 架构概述](https://deepwiki.com/wkongxiaojie/FlyEnv/3-architecture-overview)
 
 ---
 

@@ -2,11 +2,11 @@
 
 Repository:
 
-https://github.com/xpf0000/FlyEnv
+https://github.com/wkongxiaojie/FlyEnv
 
 Related issue:
 
-https://github.com/xpf0000/FlyEnv/issues/852
+https://github.com/wkongxiaojie/FlyEnv/issues/852
 
 ## Background
 

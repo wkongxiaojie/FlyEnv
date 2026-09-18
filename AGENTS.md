@@ -4,18 +4,18 @@
 
 **FlyEnv** is an All-In-One Full-Stack Environment Management Tool built with Electron and Vue 3. It provides a lightweight, modular development environment manager for Windows, macOS, and Linux, allowing developers to install and manage Apache, PHP, Node.js, Python, databases, and more—running natively without Docker.
 
-- **Version**: 4.17.0
-- **Electron Version**: 39.8.7
+- **Version**: 4.18.4
+- **Electron Version**: 39.8.10
 - **License**: MIT
 - **Author**: Pengfei Xu
-- **Repository**: <https://github.com/xpf0000/FlyEnv>
+- **Repository**: <https://github.com/wkongxiaojie/FlyEnv>
 
 ## Technology Stack
 
 ### Core Technologies
 
 - **Frontend Framework**: Vue 3 (Composition API)
-- **Desktop Framework**: Electron 39.8.7
+- **Desktop Framework**: Electron 39.8.10
 - **Build Tool**: Vite 6.x + esbuild 0.28.x
 - **Language**: TypeScript 5.8.x
 - **State Management**: Pinia 3.x
@@ -301,7 +301,7 @@ Contains various test files and utilities:
 
 ```bash
 # Clone and install
-git clone git@github.com:xpf0000/FlyEnv.git
+git clone git@github.com:wkongxiaojie/FlyEnv.git
 cd FlyEnv
 yarn install
 
@@ -372,6 +372,6 @@ yarn upgrade-interactive
 ## Resources
 
 - **Website**: <https://www.flyenv.com>
-- **Documentation**: <https://deepwiki.com/xpf0000/FlyEnv>
+- **Documentation**: <https://deepwiki.com/wkongxiaojie/FlyEnv>
 - **Discord**: <https://discord.gg/u5SuMGxjPE>
-- **Releases**: <https://github.com/xpf0000/FlyEnv/releases>
+- **Releases**: <https://github.com/wkongxiaojie/FlyEnv/releases>

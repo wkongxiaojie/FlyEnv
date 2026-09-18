@@ -1,7 +1,7 @@
 # FlyEnv
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/xpf0000/FlyEnv/master/build/256x256.png" width="160" alt="FlyEnv Logo" />
+  <img src="https://raw.githubusercontent.com/wkongxiaojie/FlyEnv/master/build/256x256.png" width="160" alt="FlyEnv Logo" />
 
   <h1>Run Your Complete Local Development Stack Natively</h1>
 
@@ -11,8 +11,8 @@
   <p>Manage PHP, Node.js, Python, Java, Go, databases, web servers, local sites, HTTPS, AI coding tools, and MCP from one desktop app.</p>
 
   <p>
-    <a href="https://github.com/xpf0000/FlyEnv/releases"><img src="https://img.shields.io/github/release/xpf0000/FlyEnv.svg" alt="GitHub release"></a>
-    <a href="https://github.com/xpf0000/FlyEnv/releases"><img src="https://img.shields.io/github/downloads/xpf0000/FlyEnv/total.svg" alt="Total Downloads"></a>
+    <a href="https://github.com/wkongxiaojie/FlyEnv/releases"><img src="https://img.shields.io/github/release/wkongxiaojie/FlyEnv.svg" alt="GitHub release"></a>
+    <a href="https://github.com/wkongxiaojie/FlyEnv/releases"><img src="https://img.shields.io/github/downloads/wkongxiaojie/FlyEnv/total.svg" alt="Total Downloads"></a>
   </p>
 
   <p>
@@ -106,8 +106,8 @@ FlyEnv can manage complete local project stacks, not just one runtime.
 
 ### Windows
 
-- **Installer:** [FlyEnv-Setup-4.18.3.exe](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-Setup-4.18.3.exe)
-- **Portable:** [FlyEnv-Portable-4.18.3.exe](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-Portable-4.18.3.exe)
+- **Installer:** [FlyEnv-Setup-4.18.4.exe](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-Setup-4.18.4.exe)
+- **Portable:** [FlyEnv-Portable-4.18.4.exe](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-Portable-4.18.4.exe)
 
 ### macOS
 
@@ -115,17 +115,17 @@ FlyEnv can manage complete local project stacks, not just one runtime.
 brew install flyenv
 ```
 
-- [FlyEnv-4.18.3.dmg (Intel)](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-4.18.3.dmg)
-- [FlyEnv-4.18.3-arm64.dmg (Apple Silicon)](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-4.18.3-arm64.dmg)
+- [FlyEnv-4.18.4.dmg (Intel)](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-4.18.4.dmg)
+- [FlyEnv-4.18.4-arm64.dmg (Apple Silicon)](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-4.18.4-arm64.dmg)
 
 ### Linux
 
-- [x86_64 `.deb`](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-4.18.3-x64.deb)
-- [ARM64 `.deb`](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-4.18.3-arm64.deb)
-- [x86_64 `.rpm`](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-4.18.3-x64.rpm)
-- [ARM64 `.rpm`](https://github.com/xpf0000/FlyEnv/releases/download/v4.18.3/FlyEnv-4.18.3-arm64.rpm)
+- [x86_64 `.deb`](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-4.18.4-x64.deb)
+- [ARM64 `.deb`](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-4.18.4-arm64.deb)
+- [x86_64 `.rpm`](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-4.18.4-x64.rpm)
+- [ARM64 `.rpm`](https://github.com/wkongxiaojie/FlyEnv/releases/download/v4.18.4/FlyEnv-4.18.4-arm64.rpm)
 
-For the latest packages, see **[GitHub Releases](https://github.com/xpf0000/FlyEnv/releases)**.
+For the latest packages, see **[GitHub Releases](https://github.com/wkongxiaojie/FlyEnv/releases)**.
 
 ---
 
@@ -148,7 +148,7 @@ For the latest packages, see **[GitHub Releases](https://github.com/xpf0000/FlyE
 
 FlyEnv is open source under the **BSD 3-Clause License**.
 
-Installation packages are built through **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**.
+Installation packages are built through **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**.
 
 Free Windows code signing is provided by [SignPath.io](https://signpath.io), with the certificate provided by the [SignPath Foundation](https://signpath.org).
 
@@ -157,7 +157,7 @@ Free Windows code signing is provided by [SignPath.io](https://signpath.io), wit
 ## Development & Contribution
 
 ```bash
-git clone git@github.com:xpf0000/FlyEnv.git
+git clone git@github.com:wkongxiaojie/FlyEnv.git
 cd FlyEnv
 yarn install
 yarn run dev
@@ -172,9 +172,9 @@ See the [Development Guide](./DEV.md).
 - Website: https://flyenv.com
 - Demos: https://flyenv.com/demos
 - Guide: https://flyenv.com/guide/
-- GitHub Discussions: https://github.com/xpf0000/FlyEnv/discussions
+- GitHub Discussions: https://github.com/wkongxiaojie/FlyEnv/discussions
 - Discord: https://discord.gg/u5SuMGxjPE
 - Facebook Group: https://www.facebook.com/groups/908637655411162
-- Architecture Analysis: https://deepwiki.com/xpf0000/FlyEnv
+- Architecture Analysis: https://deepwiki.com/wkongxiaojie/FlyEnv
 
-**License:** [BSD 3-Clause](https://github.com/xpf0000/FlyEnv/blob/master/LICENSE)
+**License:** [BSD 3-Clause](https://github.com/wkongxiaojie/FlyEnv/blob/master/LICENSE)

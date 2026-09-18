@@ -337,7 +337,7 @@ export const AppStore = defineStore('app', {
                 })
                 .then(({ response }) => {
                   if (response === 1) {
-                    shell.openExternal('https://github.com/xpf0000/FlyEnv/releases')
+                    shell.openExternal('https://github.com/wkongxiaojie/FlyEnv/releases')
                   } else if (response === 2) {
                     shell.openExternal(this.appVersion.url)
                   }

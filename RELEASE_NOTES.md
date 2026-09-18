@@ -2,6 +2,30 @@
 
 All notable changes to FlyEnv will be documented in this file.
 
+## [4.18.4] - 2026-09-18
+
+# **FlyEnv v4.18.4 Update Release Notes**
+
+## **🚀 New Features & Architecture Updates**
+
+### **1. Dedicated GitHub OAuth Authentication & License Management**
+- Migrated GitHub OAuth integration to a fully independent, user-controlled GitHub OAuth Application.
+- Removed third-party relay API dependencies and replaced them with direct GitHub token exchange and user verification.
+
+### **2. Upgraded RSA 2048 Cryptographic Licensing System**
+- Upgraded license verification across the client application with a newly generated RSA 2048 key pair.
+- Implemented one-device-one-key permanent activation based on unique hardware UUID.
+
+### **3. Automatic Cloud Push and Local Fallback Activation**
+- Added automated remote license distribution via the project repository's `licenses.json` (with multi-source acceleration).
+- Packaged offline license mapping directly into release installers to enable instant activation without network connectivity.
+- Added UI support in **Settings → License** for manual license key input and one-click cloud synchronization.
+
+### **4. Strengthened License Enforcement for Distribution Compliance**
+- Enforced strict authorization checks on host creation, multi-language projects, cron tasks, and AI/image tools to ensure full licensing compliance.
+
+---
+
 ## [4.18.3] - 2026-09-12
 
 # **FlyEnv v4.18.3 Update Release Notes**
@@ -40,7 +64,7 @@ FlyEnv now has a more resilient Windows machine ID lookup for systems where the 
 
 The fallback process reads Windows' `MachineGuid` first and then tries `Win32_ComputerSystemProduct.UUID`, validating the result before it is used. This fixes cases where affected users could not request or activate a FlyEnv license because no machine UUID was available.
 
-Thanks to [@FunkZero](https://github.com/FunkZero) for reporting the UUID issue! [Discussion #606](https://github.com/xpf0000/FlyEnv/discussions/606)
+Thanks to [@FunkZero](https://github.com/FunkZero) for reporting the UUID issue! [Discussion #606](https://github.com/wkongxiaojie/FlyEnv/discussions/606)
 
 ---
 
@@ -53,7 +77,7 @@ Podman machine creation has been updated to avoid unsupported command-line param
 - **SSH Identity Handling**: The unsupported `--identity-path` initialization argument has been removed; FlyEnv continues to display Podman's generated SSH identity as read-only information
 - **Configuration Compatibility**: FlyEnv respects synchronized `XDG_CONFIG_HOME` values and preserves custom `CONTAINERS_CONF` configurations through Podman's override mechanism
 
-Thanks to [@YoloCyber](https://github.com/YoloCyber) for the contribution and detailed follow-up reports! [Issue #800](https://github.com/xpf0000/FlyEnv/issues/800) · [Pull Request #855](https://github.com/xpf0000/FlyEnv/pull/855) · [Issue #856](https://github.com/xpf0000/FlyEnv/issues/856) · [Issue #857](https://github.com/xpf0000/FlyEnv/issues/857)
+Thanks to [@YoloCyber](https://github.com/YoloCyber) for the contribution and detailed follow-up reports! [Issue #800](https://github.com/wkongxiaojie/FlyEnv/issues/800) · [Pull Request #855](https://github.com/wkongxiaojie/FlyEnv/pull/855) · [Issue #856](https://github.com/wkongxiaojie/FlyEnv/issues/856) · [Issue #857](https://github.com/wkongxiaojie/FlyEnv/issues/857)
 
 ---
 
@@ -61,7 +85,7 @@ Thanks to [@YoloCyber](https://github.com/YoloCyber) for the contribution and de
 
 All FlyEnv builds continue to be produced through public GitHub Actions workflows. Build logs, workflow definitions, and release artifacts remain available for inspection in the repository.
 
-Thank you to everyone who reports issues, contributes fixes, and helps improve FlyEnv. Feedback and suggestions are always welcome through [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues) and [GitHub Discussions](https://github.com/xpf0000/FlyEnv/discussions).
+Thank you to everyone who reports issues, contributes fixes, and helps improve FlyEnv. Feedback and suggestions are always welcome through [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues) and [GitHub Discussions](https://github.com/wkongxiaojie/FlyEnv/discussions).
 
 ---
 
@@ -85,7 +109,7 @@ Windows PHP FastCGI installations can now set the number of `php-cgi` workers fo
 
 This gives local PHP projects a supported way to tune concurrency when several sites or heavier development workloads are running at once.
 
-[Issue #830](https://github.com/xpf0000/FlyEnv/issues/830)
+[Issue #830](https://github.com/wkongxiaojie/FlyEnv/issues/830)
 
 ---
 
@@ -93,7 +117,7 @@ This gives local PHP projects a supported way to tune concurrency when several s
 
 FlyEnv is now available in Persian (`fa`). The new locale covers the application's built-in translation catalog and is selectable from the language settings.
 
-Thanks to [@Nitron2020](https://github.com/Nitron2020) for the contribution! [Pull Request #829](https://github.com/xpf0000/FlyEnv/pull/829)
+Thanks to [@Nitron2020](https://github.com/Nitron2020) for the contribution! [Pull Request #829](https://github.com/wkongxiaojie/FlyEnv/pull/829)
 
 ---
 
@@ -125,7 +149,7 @@ Resolved a Windows installation issue that could leave downloaded Rust archives 
 
 FlyEnv no longer detects or operates the external NVM and FNM Node.js version managers on Windows. Managed Node.js versions continue to work through FlyEnv's built-in installation workflow, while removing this integration prevents the NVM startup popup reported by affected users.
 
-[Issue #831](https://github.com/xpf0000/FlyEnv/issues/831)
+[Issue #831](https://github.com/wkongxiaojie/FlyEnv/issues/831)
 
 ---
 
@@ -133,7 +157,7 @@ FlyEnv no longer detects or operates the external NVM and FNM Node.js version ma
 
 The Windows modern tray menu now opens from a right-click only. Double-clicking the tray icon opens the main FlyEnv window without also displaying the quick-action menu.
 
-[Issue #831](https://github.com/xpf0000/FlyEnv/issues/831)
+[Issue #831](https://github.com/wkongxiaojie/FlyEnv/issues/831)
 
 ---
 
@@ -141,19 +165,19 @@ The Windows modern tray menu now opens from a right-click only. Double-clicking 
 
 Resolved an issue where editing a FlyEnv alias on macOS could write a stray quote into the `PATH` export in `.zshrc`. Alias setup now parses existing path entries safely and preserves a valid shell configuration.
 
-[Issue #832](https://github.com/xpf0000/FlyEnv/issues/832)
+[Issue #832](https://github.com/wkongxiaojie/FlyEnv/issues/832)
 
 ---
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -174,7 +198,7 @@ This integration provides:
 - **Configuration and Logs**: Edit the Neo4j configuration and inspect service startup and runtime logs
 - **Neo4j Browser Access**: Open the local Neo4j Browser for a running instance
 
-[Issue #719](https://github.com/xpf0000/FlyEnv/issues/719)
+[Issue #719](https://github.com/wkongxiaojie/FlyEnv/issues/719)
 
 ---
 
@@ -184,7 +208,7 @@ PostgreSQL now includes a built-in **pgAdmin 4** web management panel. When Post
 
 FlyEnv installs pgAdmin 4 on demand with the selected Python runtime, keeps its data and logs in the PostgreSQL workspace, registers the active FlyEnv PostgreSQL server, and stops the companion process together with PostgreSQL.
 
-[Issue #680](https://github.com/xpf0000/FlyEnv/issues/680)
+[Issue #680](https://github.com/wkongxiaojie/FlyEnv/issues/680)
 
 ---
 
@@ -206,19 +230,19 @@ Redis now includes an on-demand **Redis Commander** web management panel. FlyEnv
 
 Site QR codes now encode the complete site URL, including the `http://` or `https://` protocol and any configured port. Scanning a code from the Hosts or Tomcat site list now opens the site as a link instead of treating the hostname as plain text.
 
-[Issue #815](https://github.com/xpf0000/FlyEnv/issues/815)
+[Issue #815](https://github.com/wkongxiaojie/FlyEnv/issues/815)
 
 ---
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -238,7 +262,7 @@ This integration provides:
 - **Configuration and Logs**: Edit the `config.xml` and `users.xml` files and review server, startup, and error logs from the module
 - **Built-In Browser UI**: Open a managed CH-UI browser interface for a running ClickHouse server
 
-[Issue #774](https://github.com/xpf0000/FlyEnv/issues/774)
+[Issue #774](https://github.com/wkongxiaojie/FlyEnv/issues/774)
 
 ---
 
@@ -246,7 +270,7 @@ This integration provides:
 
 FlyEnv now includes a dedicated **Temporal** module for running a local Temporal Server. You can download and manage server versions, edit the generated server configuration, inspect logs, and open the Temporal Web UI when you need to explore workflows and namespaces in a browser.
 
-[Issue #730](https://github.com/xpf0000/FlyEnv/issues/730)
+[Issue #730](https://github.com/wkongxiaojie/FlyEnv/issues/730)
 
 ---
 
@@ -254,7 +278,7 @@ FlyEnv now includes a dedicated **Temporal** module for running a local Temporal
 
 A separate **Temporal CLI** module is now available for local development workflows. It manages the official Temporal CLI and its `temporal server start-dev` development server, with configurable ports, local database settings, logs, and direct access to the built-in Web UI.
 
-[Issue #730](https://github.com/xpf0000/FlyEnv/issues/730)
+[Issue #730](https://github.com/wkongxiaojie/FlyEnv/issues/730)
 
 ---
 
@@ -262,7 +286,7 @@ A separate **Temporal CLI** module is now available for local development workfl
 
 Startup Groups are now displayed in the FlyEnv tray menu, ahead of individual services. You can start or stop a saved group directly from either tray style, making it easier to switch an entire project environment without opening the main window.
 
-[Issue #782](https://github.com/xpf0000/FlyEnv/issues/782)
+[Issue #782](https://github.com/wkongxiaojie/FlyEnv/issues/782)
 
 ---
 
@@ -274,19 +298,19 @@ Windows users can now choose the elevation method used for operations that requi
 
 If Helper installation fails, FlyEnv now automatically switches to UAC so supported privileged actions remain available instead of being blocked by the failed Helper setup.
 
-[Issue #756](https://github.com/xpf0000/FlyEnv/issues/756) [Issue #797](https://github.com/xpf0000/FlyEnv/issues/797)
+[Issue #756](https://github.com/wkongxiaojie/FlyEnv/issues/756) [Issue #797](https://github.com/wkongxiaojie/FlyEnv/issues/797)
 
 ---
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -320,13 +344,13 @@ Resolved an issue that could prevent scheduled tasks from executing correctly on
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -350,7 +374,7 @@ This integration provides:
 
 The same service can be reused across multiple groups, making it easy to share common infrastructure such as MySQL or Redis while keeping project-specific environments separate.
 
-Thanks to [@branll](https://github.com/branll), [@freenessfish](https://github.com/freenessfish), and [@SevenJoker](https://github.com/SevenJoker) for the feature requests! [Discussion #706](https://github.com/xpf0000/FlyEnv/discussions/706) [Issue #742](https://github.com/xpf0000/FlyEnv/issues/742) [Issue #757](https://github.com/xpf0000/FlyEnv/issues/757)
+Thanks to [@branll](https://github.com/branll), [@freenessfish](https://github.com/freenessfish), and [@SevenJoker](https://github.com/SevenJoker) for the feature requests! [Discussion #706](https://github.com/wkongxiaojie/FlyEnv/discussions/706) [Issue #742](https://github.com/wkongxiaojie/FlyEnv/issues/742) [Issue #757](https://github.com/wkongxiaojie/FlyEnv/issues/757)
 
 ---
 
@@ -362,7 +386,7 @@ Resolved an issue where long .NET preview version strings such as `11.0.100-prev
 
 Long version names are also truncated cleanly in the table and can be viewed in full by hovering over them.
 
-Thanks to [@TanNhatCMS](https://github.com/TanNhatCMS) for the contribution! [Pull Request #770](https://github.com/xpf0000/FlyEnv/pull/770)
+Thanks to [@TanNhatCMS](https://github.com/TanNhatCMS) for the contribution! [Pull Request #770](https://github.com/wkongxiaojie/FlyEnv/pull/770)
 
 ---
 
@@ -380,13 +404,13 @@ This improvement includes:
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -420,7 +444,7 @@ This integration provides:
 - **MCP Management**: List configured MCP servers and add or remove FlyEnv MCP connections directly from each client module
 - **Client-Specific Extras**: Manage plugins for Claude Code and Codex, skills for Antigravity CLI and GitHub Copilot CLI, provider/stats views for OpenCode, and logs/session export workflows for Kimi
 
-[Issue #712](https://github.com/xpf0000/FlyEnv/issues/712)
+[Issue #712](https://github.com/wkongxiaojie/FlyEnv/issues/712)
 
 ---
 
@@ -430,7 +454,7 @@ This integration provides:
 
 FlyEnv now uses the maintained **pgsty/minio** fork as the updated MinIO download source, improving install availability after upstream distribution changes and making MinIO version downloads more reliable.
 
-[Issue #626](https://github.com/xpf0000/FlyEnv/issues/626)
+[Issue #626](https://github.com/wkongxiaojie/FlyEnv/issues/626)
 
 ---
 
@@ -438,7 +462,7 @@ FlyEnv now uses the maintained **pgsty/minio** fork as the updated MinIO downloa
 
 Resolved a Windows issue where FlyEnv could register an incorrect Python environment path during setup. Python environment registration now points to the correct FlyEnv-managed runtime layout, so newly installed Python versions are exposed more reliably.
 
-[Issue #633](https://github.com/xpf0000/FlyEnv/issues/633)
+[Issue #633](https://github.com/wkongxiaojie/FlyEnv/issues/633)
 
 ---
 
@@ -446,7 +470,7 @@ Resolved a Windows issue where FlyEnv could register an incorrect Python environ
 
 Resolved an issue where FlyEnv could miss Rust toolchains installed through `rustup` when `CARGO_HOME` or `RUSTUP_HOME` had been customized. FlyEnv now respects those environment variables when locating `rustup`, toolchains, and related runtime data.
 
-[Issue #691](https://github.com/xpf0000/FlyEnv/issues/691)
+[Issue #691](https://github.com/wkongxiaojie/FlyEnv/issues/691)
 
 ---
 
@@ -460,7 +484,7 @@ This improvement includes:
 - **Cleaner Hosts File Behavior**: Pure loopback sites no longer require redundant hosts-file writes, which reduces unnecessary admin prompts
 - **Stable Vhost File Naming**: Generated vhost, rewrite, and log files now avoid same-name collisions across multi-port localhost sites
 
-[Issue #700](https://github.com/xpf0000/FlyEnv/issues/700)
+[Issue #700](https://github.com/wkongxiaojie/FlyEnv/issues/700)
 
 ---
 
@@ -468,7 +492,7 @@ This improvement includes:
 
 Resolved an issue where FlyEnv-managed environment variables could appear in the wrong order, allowing system or Homebrew Python binaries to take precedence over the version selected in FlyEnv. FlyEnv now rebuilds Python PATH entries with dedicated shims so `python` and `python3` resolve consistently to the active FlyEnv version.
 
-[Issue #713](https://github.com/xpf0000/FlyEnv/issues/713)
+[Issue #713](https://github.com/wkongxiaojie/FlyEnv/issues/713)
 
 ---
 
@@ -476,19 +500,19 @@ Resolved an issue where FlyEnv-managed environment variables could appear in the
 
 Resolved a Windows scheduled-task issue where cron jobs could fail when the generated task wrapper or working directory path contained spaces. FlyEnv now launches the PowerShell wrapper through a safer quoted command path, improving reliability for projects stored under directories such as `C:\\Program Files\\...` or other spaced workspace paths.
 
-[Issue #728](https://github.com/xpf0000/FlyEnv/issues/728) [Issue #729](https://github.com/xpf0000/FlyEnv/issues/729)
+[Issue #728](https://github.com/wkongxiaojie/FlyEnv/issues/728) [Issue #729](https://github.com/wkongxiaojie/FlyEnv/issues/729)
 
 ---
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -530,13 +554,13 @@ Fixed an issue where the RabbitMQ management plugin could not be enabled, which 
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -583,7 +607,7 @@ This update makes PHP deployment workflows easier to understand:
 - **Cleaner Navigation**: Keep PHP runtime/service management separate from PHP project deployment
 - **Complete PHP Deployment Coverage**: FlyEnv now covers PHP, PHP-FPM, FrankenPHP, RoadRunner, and Swoole CLI deployment shapes in one desktop app
 
-Thanks to [@chunbo007](https://github.com/chunbo007) for the discussion! [Discussion #694](https://github.com/xpf0000/FlyEnv/discussions/694)
+Thanks to [@chunbo007](https://github.com/chunbo007) for the discussion! [Discussion #694](https://github.com/wkongxiaojie/FlyEnv/discussions/694)
 
 ---
 
@@ -598,7 +622,7 @@ This integration provides:
 - **Log Access**: View standard and error logs directly in the ZincSearch module
 - **Quick UI Access**: Open the ZincSearch web UI using the configured host and port when the service is running
 
-Thanks to [@zzdboy](https://github.com/zzdboy) for the feature request! [Issue #440](https://github.com/xpf0000/FlyEnv/issues/440)
+Thanks to [@zzdboy](https://github.com/zzdboy) for the feature request! [Issue #440](https://github.com/wkongxiaojie/FlyEnv/issues/440)
 
 ---
 
@@ -610,7 +634,7 @@ Installed version lists now include a **Remark** column, making it easier to lab
 
 This helps prevent accidental deletion or confusion when multiple versions of the same runtime are installed for different projects.
 
-Thanks to [@Y0n3er](https://github.com/Y0n3er) for the feature request! [Issue #543](https://github.com/xpf0000/FlyEnv/issues/543)
+Thanks to [@Y0n3er](https://github.com/Y0n3er) for the feature request! [Issue #543](https://github.com/wkongxiaojie/FlyEnv/issues/543)
 
 ---
 
@@ -634,13 +658,13 @@ Resolved an issue on macOS where a service could remain stuck in the "starting" 
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -663,7 +687,7 @@ This integration provides:
 - **Cross-Platform Support**: Works across Windows, macOS, and Linux with architecture-aware downloads
 - **Package Manager Support**: Includes Homebrew discovery support for macOS users
 
-Thanks to [@sky22333](https://github.com/sky22333) for the feature request! [Issue #662](https://github.com/xpf0000/FlyEnv/issues/662)
+Thanks to [@sky22333](https://github.com/sky22333) for the feature request! [Issue #662](https://github.com/wkongxiaojie/FlyEnv/issues/662)
 
 ---
 
@@ -680,7 +704,7 @@ This integration allows you to:
 - **System Task View**: Browse FlyEnv-created tasks and existing system scheduled tasks in one place
 - **Command Templates**: Quickly insert common PHP, Node.js, Python, and shell command patterns
 
-Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #674](https://github.com/xpf0000/FlyEnv/pull/674)
+Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #674](https://github.com/wkongxiaojie/FlyEnv/pull/674)
 
 ---
 
@@ -688,7 +712,7 @@ Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #674](h
 
 FlyEnv now supports **Korean** as an application language. The translation covers the core app interface, setup pages, service modules, toolbox entries, Cron Jobs, Flutter, and other module-specific text.
 
-Thanks to [@vendeeglobe](https://github.com/vendeeglobe) for the PR! [PR #676](https://github.com/xpf0000/FlyEnv/pull/676)
+Thanks to [@vendeeglobe](https://github.com/vendeeglobe) for the PR! [PR #676](https://github.com/wkongxiaojie/FlyEnv/pull/676)
 
 ---
 
@@ -698,7 +722,7 @@ Thanks to [@vendeeglobe](https://github.com/vendeeglobe) for the PR! [PR #676](h
 
 Resolved an issue where MongoDB could fail to start on macOS. The MongoDB startup flow now uses the platform-appropriate service launch path with generated configuration, log, PID, and data directory handling, improving startup reliability on macOS.
 
-Thanks to [@leafspace](https://github.com/leafspace) for reporting this issue! [Issue #679](https://github.com/xpf0000/FlyEnv/issues/679)
+Thanks to [@leafspace](https://github.com/leafspace) for reporting this issue! [Issue #679](https://github.com/wkongxiaojie/FlyEnv/issues/679)
 
 ---
 
@@ -706,19 +730,19 @@ Thanks to [@leafspace](https://github.com/leafspace) for reporting this issue! [
 
 Resolved an issue where Flutter SDK installation could fail after extraction. FlyEnv now normalizes the extracted SDK directory and initializes the installed Flutter SDK as a Git repository, preventing Flutter commands from failing with repository-related errors after installation.
 
-Thanks to [@yljphp](https://github.com/yljphp) for reporting this issue! [Issue #682](https://github.com/xpf0000/FlyEnv/issues/682)
+Thanks to [@yljphp](https://github.com/yljphp) for reporting this issue! [Issue #682](https://github.com/wkongxiaojie/FlyEnv/issues/682)
 
 ---
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -742,7 +766,7 @@ This integration allows you to:
 - **Advanced Commands**: Execute doctor, upgrade, channel switching, pub commands (get, upgrade, outdated, deps), clean, analyze, test, format, and platform-specific builds (web, Windows, APK release/debug)
 - **SDK Info**: View detailed Flutter and Dart version information, engine revision, and build date
 
-Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #649](https://github.com/xpf0000/FlyEnv/pull/649)
+Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #649](https://github.com/wkongxiaojie/FlyEnv/pull/649)
 
 ---
 
@@ -756,7 +780,7 @@ This integration provides:
 - **Environment Diagnostics**: Check Git path, SSH availability, and Git LFS status
 - **Cross-Platform Support**: Works on Windows, macOS, and Linux with platform-aware checks
 
-Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #664](https://github.com/xpf0000/FlyEnv/pull/664)
+Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #664](https://github.com/wkongxiaojie/FlyEnv/pull/664)
 
 ---
 
@@ -771,7 +795,7 @@ Features include:
 - Sample data loading for quick testing
 - Swap and clear actions for efficient workflow
 
-Thanks to [@Heyiki](https://github.com/Heyiki) and [@qaydt20250317](https://github.com/qaydt20250317) for the PRs! [PR #651](https://github.com/xpf0000/FlyEnv/pull/651) [PR #670](https://github.com/xpf0000/FlyEnv/pull/670)
+Thanks to [@Heyiki](https://github.com/Heyiki) and [@qaydt20250317](https://github.com/qaydt20250317) for the PRs! [PR #651](https://github.com/wkongxiaojie/FlyEnv/pull/651) [PR #670](https://github.com/wkongxiaojie/FlyEnv/pull/670)
 
 ---
 
@@ -786,7 +810,7 @@ This tool provides:
 - **Message Exchange**: Send messages and view received messages in a clean, organized interface
 - **Auto-Reconnect**: Automatically reconnect WebSocket connections when disconnected
 
-Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #657](https://github.com/xpf0000/FlyEnv/pull/657)
+Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #657](https://github.com/wkongxiaojie/FlyEnv/pull/657)
 
 ---
 
@@ -800,13 +824,13 @@ Optimized the Windows version to improve the stability and reliability of servic
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -821,7 +845,7 @@ We welcome your continued feedback and bug reports via [GitHub Issues](https://g
 
 FlyEnv now integrates **[CliProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — a lightweight CLI proxy API solution — directly into your development environment. You can now install, configure, and manage CliProxyAPI with just a few clicks from the FlyEnv UI.
 
-Thanks to [@diinggos](https://github.com/diinggos) for the feature request! [Issue #640](https://github.com/xpf0000/FlyEnv/issues/640)
+Thanks to [@diinggos](https://github.com/diinggos) for the feature request! [Issue #640](https://github.com/wkongxiaojie/FlyEnv/issues/640)
 
 ---
 
@@ -829,7 +853,7 @@ Thanks to [@diinggos](https://github.com/diinggos) for the feature request! [Iss
 
 Introducing **[Numa](https://numa.rs/)** support to FlyEnv! Numa is a powerful framework that you can now easily install and manage directly from the FlyEnv interface.
 
-Thanks to [@batcom](https://github.com/batcom) for the feature request! [Issue #616](https://github.com/xpf0000/FlyEnv/issues/616)
+Thanks to [@batcom](https://github.com/batcom) for the feature request! [Issue #616](https://github.com/wkongxiaojie/FlyEnv/issues/616)
 
 ---
 
@@ -837,7 +861,7 @@ Thanks to [@batcom](https://github.com/batcom) for the feature request! [Issue #
 
 FlyEnv now supports **[r-nacos](https://r-nacos.github.io/docs/intro/)** — a Rust implementation of the Nacos service discovery and configuration management platform. You can now install and manage Rnacos directly from the FlyEnv UI.
 
-Thanks to [@achunchunya](https://github.com/achunchunya) for the feature request! [Issue #641](https://github.com/xpf0000/FlyEnv/issues/641)
+Thanks to [@achunchunya](https://github.com/achunchunya) for the feature request! [Issue #641](https://github.com/wkongxiaojie/FlyEnv/issues/641)
 
 ---
 
@@ -845,7 +869,7 @@ Thanks to [@achunchunya](https://github.com/achunchunya) for the feature request
 
 We are excited to bring **[FrankenPHP](https://frankenphp.dev/)** to FlyEnv! FrankenPHP is a modern PHP application server written in Go. You can now easily install, configure, and run FrankenPHP directly from the FlyEnv interface.
 
-Thanks to [@eqwt](https://github.com/eqwt) for the feature request! [Issue #642](https://github.com/xpf0000/FlyEnv/issues/642)
+Thanks to [@eqwt](https://github.com/eqwt) for the feature request! [Issue #642](https://github.com/wkongxiaojie/FlyEnv/issues/642)
 
 ---
 
@@ -853,7 +877,7 @@ Thanks to [@eqwt](https://github.com/eqwt) for the feature request! [Issue #642]
 
 Enhanced the Ollama module with hardware-based availability detection for online models. Models are now displayed with a color-coded indicator (red/yellow/green) based on your local hardware capabilities, helping you quickly identify which models are suitable for your machine.
 
-Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #635](https://github.com/xpf0000/FlyEnv/pull/635)
+Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #635](https://github.com/wkongxiaojie/FlyEnv/pull/635)
 
 ---
 
@@ -861,7 +885,7 @@ Thanks to [@ibraimfarag](https://github.com/ibraimfarag) for the PR! [PR #635](h
 
 The Toolbox now includes a convenient **JWT encoding and decoding tool**. You can easily encode and decode JSON Web Tokens directly within FlyEnv, making it simpler to debug and work with JWT-based authentication during development.
 
-Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #643](https://github.com/xpf0000/FlyEnv/pull/643)
+Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #643](https://github.com/wkongxiaojie/FlyEnv/pull/643)
 
 ---
 
@@ -869,7 +893,7 @@ Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #643](https://git
 
 The Toolbox now also features a **Cron expression parser and runtime calculator**. Enter any cron expression to see a human-readable description and calculate the next scheduled run times, streamlining your workflow when working with scheduled tasks.
 
-Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #645](https://github.com/xpf0000/FlyEnv/pull/645)
+Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #645](https://github.com/wkongxiaojie/FlyEnv/pull/645)
 
 ---
 
@@ -879,19 +903,19 @@ Thanks to [@Heyiki](https://github.com/Heyiki) for the PR! [PR #645](https://git
 
 Resolved an issue where Auto HTTPS certificate generation would fail when the current username contained a dot (`.`) character. Certificates will now be generated correctly regardless of special characters in the system username.
 
-Thanks to [@dkoychev](https://github.com/dkoychev) for reporting this issue! [Issue #639](https://github.com/xpf0000/FlyEnv/issues/639)
+Thanks to [@dkoychev](https://github.com/dkoychev) for reporting this issue! [Issue #639](https://github.com/wkongxiaojie/FlyEnv/issues/639)
 
 ---
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -930,13 +954,13 @@ Resolved a critical issue where exiting the application from the system tray was
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -973,13 +997,13 @@ Resolved a critical issue where PostgreSQL could not be properly stopped after s
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -1055,13 +1079,13 @@ Fixed critical DNS service issues with wildcard domain resolution. FlyEnv's DNS 
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-- **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+- **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -1116,14 +1140,14 @@ seamlessly within FlyEnv.
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)**. You
+All FlyEnv installation packages are built using **[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)**. You
 can verify the build process and download the artifacts directly from the following links:
 
-* **Global Build History:** [GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)
+* **Global Build History:** [GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)
 
   ---
 
-We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**
 
@@ -1155,12 +1179,12 @@ Resolved a critical issue in the Linux version where environment isolation was f
 
 ## **📦 Build & Transparency**
 
-All FlyEnv installation packages are built using **[[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)](https://github.com/xpf0000/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
+All FlyEnv installation packages are built using **[[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)](https://github.com/wkongxiaojie/FlyEnv/actions)**. You can verify the build process and download the artifacts directly from the following links:
 
-* **Global Build History:** [[GitHub Actions](https://github.com/xpf0000/FlyEnv/actions)](https://github.com/xpf0000/FlyEnv/actions)
+* **Global Build History:** [[GitHub Actions](https://github.com/wkongxiaojie/FlyEnv/actions)](https://github.com/wkongxiaojie/FlyEnv/actions)
 
 ---
 
-We welcome your continued feedback and bug reports via [[[GitHub Issues](https://github.com/xpf0000/FlyEnv/issues)](https://github.com/xpf0000/FlyEnv/issues)](https://github.com/xpf0000/FlyEnv/issues)
+We welcome your continued feedback and bug reports via [[[GitHub Issues](https://github.com/wkongxiaojie/FlyEnv/issues)](https://github.com/wkongxiaojie/FlyEnv/issues)](https://github.com/wkongxiaojie/FlyEnv/issues)
 
 **Enjoy the update!**

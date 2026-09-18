@@ -4,9 +4,9 @@ import AfterSign from '../build/afterSign'
 const conf: Configuration = {
   productName: 'FlyEnv',
   executableName: 'FlyEnv',
-  buildVersion: '4.18.3',
+  buildVersion: '4.18.4',
   electronVersion: '39.8.10',
-  appId: 'phpstudy.xpfme.com',
+  appId: 'com.wkongxiaojie.flyenv',
   asar: true,
   directories: {
     output: 'release'
@@ -31,6 +31,10 @@ const conf: Configuration = {
       {
         from: 'src/helper-go/dist/flyenv-helper-windows-amd64-v1.exe',
         to: 'app.asar.unpacked/node_modules/helper/flyenv-helper.exe'
+      },
+      {
+        from: 'licenses.json',
+        to: 'licenses.json'
       }
     ],
     // Windows release signing is performed from GitHub workflow artifacts via the

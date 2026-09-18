@@ -4,26 +4,86 @@
       <div class="p-3 flex flex-col gap-4">
         <el-card>
           <template #header>
-            <span>{{ I18nT('licenses.currentLicenseState') }}</span>
+            <div class="flex items-center justify-between">
+              <span>{{ I18nT('licenses.currentLicenseState') }}</span>
+              <el-tag v-if="store.isActive" type="success" effect="dark">
+                {{ I18nT('licenses.licenseActivated') }}
+              </el-tag>
+              <el-tag v-else type="danger" effect="dark">
+                {{ I18nT('licenses.licenseNoActivated') }}
+              </el-tag>
+            </div>
           </template>
           <template #default>
-            <el-descriptions :column="1" :direction="'vertical'">
-              <el-descriptions-item :label="I18nT('licenses.activeState')">
-                <template v-if="store.isActive">
-                  <el-result icon="success" :title="I18nT('licenses.licenseActivated')">
-                  </el-result>
-                </template>
-                <template v-else>
-                  <el-result icon="warning" :title="I18nT('licenses.licenseNoActivated')">
-                  </el-result>
-                </template>
-              </el-descriptions-item>
-              <el-descriptions-item label-align="left" :align="'center'" label="UUID">
-                {{ store.uuid }}
-              </el-descriptions-item>
-            </el-descriptions>
+            <div class="flex flex-col gap-4">
+              <div class="flex flex-col gap-1 p-3 rounded bg-stone-100 dark:bg-stone-800">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-stone-500">机器识别码 (UUID)</span>
+                  <el-button size="small" type="primary" link @click="copyText(store.uuid)">
+                    {{ I18nT('base.copy') }}
+                  </el-button>
+                </div>
+                <div class="font-mono text-sm break-all select-all text-stone-800 dark:text-stone-200">
+                  {{ store.uuid }}
+                </div>
+              </div>
+
+              <div
+                v-if="store.isActive"
+                class="flex flex-col gap-1 p-3 rounded bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-green-700 dark:text-green-400">
+                    专属永久授权已生效
+                  </span>
+                  <el-button
+                    size="small"
+                    type="success"
+                    link
+                    @click="copyText(store.activeCode)"
+                  >
+                    {{ I18nT('base.copy') }}
+                  </el-button>
+                </div>
+                <div class="font-mono text-xs break-all select-all text-stone-600 dark:text-stone-300">
+                  {{ store.activeCode }}
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2 pt-2 border-t border-stone-200 dark:border-stone-700">
+                <span class="text-xs text-stone-500 font-semibold">
+                  {{ store.isActive ? '更换或重新激活许可证' : '输入激活码激活' }}
+                </span>
+                <el-input
+                  v-model="manualCode"
+                  type="textarea"
+                  :rows="2"
+                  resize="none"
+                  placeholder="在此粘贴专属许可证激活码 (Base64)"
+                  clearable
+                />
+                <div class="flex gap-2 justify-end">
+                  <el-button
+                    type="primary"
+                    :loading="store.fetching"
+                    :disabled="!manualCode.trim() || store.fetching"
+                    @click="doManualActivate"
+                  >
+                    立即激活
+                  </el-button>
+                  <el-button
+                    :loading="store.fetching"
+                    :disabled="store.fetching"
+                    @click="doRefresh"
+                  >
+                    从 GitHub 同步授权
+                  </el-button>
+                </div>
+              </div>
+            </div>
           </template>
         </el-card>
+
         <el-card>
           <template #header>
             <div class="w-full flex items-center justify-between">
@@ -129,6 +189,7 @@
             </el-table>
           </template>
         </el-card>
+
         <el-card v-if="!store.isActive">
           <template #header>
             <span>{{ I18nT('common.label.licenseDescription') }}</span>
@@ -152,8 +213,8 @@
                 <el-button
                   type="primary"
                   link
-                  @click.stop="toUrl('https://flyenv.com/license.html')"
-                  >https://flyenv.com/license.html</el-button
+                  @click.stop="toUrl('https://github.com/wkongxiaojie/FlyEnv')"
+                  >https://github.com/wkongxiaojie/FlyEnv</el-button
                 >
               </p>
               <p>2. {{ I18nT('licenses.howToObtain.methods.1.title') }} </p>
@@ -162,8 +223,8 @@
                 <el-button
                   type="primary"
                   link
-                  @click.stop="toUrl('https://github.com/xpf0000/FlyEnv')"
-                  >https://github.com/xpf0000/FlyEnv</el-button
+                  @click.stop="toUrl('https://github.com/wkongxiaojie/FlyEnv')"
+                  >https://github.com/wkongxiaojie/FlyEnv</el-button
                 ></p
               >
               <p> 3. {{ I18nT('licenses.howToObtain.methods.2.title') }} </p>
@@ -172,8 +233,8 @@
                 <el-button
                   type="primary"
                   link
-                  @click.stop="toUrl('https://flyenv.com/license.html')"
-                  >https://flyenv.com/license.html</el-button
+                  @click.stop="toUrl('https://github.com/wkongxiaojie/FlyEnv')"
+                  >https://github.com/wkongxiaojie/FlyEnv</el-button
                 >
               </p>
               <p>{{ I18nT('licenses.submitInfo') }}</p>
@@ -217,11 +278,14 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { ref } from 'vue'
   import { SetupStore } from '@/components/Setup/store'
   import { I18nT } from '@lang/index'
-  import { shell } from '@/util/NodeFn'
+  import { shell, clipboard } from '@/util/NodeFn'
+  import { ElMessage } from 'element-plus'
 
   const store = SetupStore()
+  const manualCode = ref('')
 
   const toUrl = (url: string) => {
     shell.openExternal(url)
@@ -231,5 +295,15 @@
   }
   const doRefresh = () => {
     store.refreshState()
+  }
+  const doManualActivate = () => {
+    store.manualActivate(manualCode.value).then(() => {
+      manualCode.value = ''
+    }).catch(() => {})
+  }
+  const copyText = (text: string) => {
+    if (!text) return
+    clipboard.writeText(text)
+    ElMessage.success(I18nT('base.copySuccess'))
   }
 </script>

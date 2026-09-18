@@ -1,7 +1,11 @@
 {
   "name": "FlyEnv",
-  "version": "4.18.3",
+  "version": "4.18.4",
   "description": "All-In-One Full-Stack Environment Management Tool",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wkongxiaojie/FlyEnv.git"
+  },
   "author": {
     "name": "Pengfei Xu",
     "email": "250881478@qq.com"
