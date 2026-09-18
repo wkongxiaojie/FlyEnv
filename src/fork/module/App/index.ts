@@ -61,9 +61,9 @@ QQIDAQAB
     try {
       const uid = publicDecrypt(
         this.getRSAKey(),
-        Buffer.from(license, 'base64') as any
+        Buffer.from(license.trim(), 'base64') as any
       ).toString('utf-8')
-      return uid.trim() === currentUuid.trim()
+      return uid.trim().toLowerCase() === currentUuid.trim().toLowerCase()
     } catch (e) {
       return false
     }
@@ -122,19 +122,20 @@ QQIDAQAB
     })
   }
 
-  licensesInit() {
-    return new ForkPromise(async (resolve, reject, on) => {
+  licensesInit(checkRemote = true) {
+    return new ForkPromise(async (resolve) => {
       let uuid = ''
       try {
         uuid = await machineId()
       } catch (e) {
         appDebugLog(`[machineId][error]`, `${e}`).catch()
       }
-      const data = {
+      const data: any = {
         requestSuccess: true,
         uuid,
         activeCode: '',
-        isActive: false
+        isActive: false,
+        'APP-Licenses-Code': ''
       }
 
       // 1. 优先检查本地已有且有效的许可证
@@ -142,27 +143,26 @@ QQIDAQAB
       if (localLicense && this.verifyLicense(localLicense, uuid)) {
         data.activeCode = localLicense
         data.isActive = true
-        on({
-          'APP-Licenses-Code': data.activeCode
-        })
+        data['APP-Licenses-Code'] = localLicense
         resolve(data)
         return
       }
 
-      // 2. 尝试从 GitHub 仓库或本地内置 licenses.json 自动匹配
-      try {
-        const map = await this.fetchRemoteLicenses()
-        const code = map[uuid]
-        if (code && this.verifyLicense(code, uuid)) {
-          data.activeCode = code
-          data.isActive = true
-          on({
-            'APP-Licenses-Code': data.activeCode
-          })
-          resolve(data)
-          return
-        }
-      } catch {}
+      // 2. 尝试从 GitHub 仓库或本地内置 licenses.json 自动匹配（若未被手动清除）
+      if (checkRemote) {
+        try {
+          const map = await this.fetchRemoteLicenses()
+          const code = map[uuid]
+          if (code && this.verifyLicense(code, uuid)) {
+            data.activeCode = code
+            data.isActive = true
+            data['APP-Licenses-Code'] = code
+            global.Server.Licenses = code
+            resolve(data)
+            return
+          }
+        } catch {}
+      }
 
       // 3. 未匹配到，处于未激活状态
       resolve(data)
@@ -170,15 +170,16 @@ QQIDAQAB
   }
 
   licensesState() {
-    return new ForkPromise(async (resolve, reject, on) => {
+    return new ForkPromise(async (resolve) => {
       let uuid = ''
       try {
         uuid = await machineId()
       } catch (e) {}
-      const obj = {
+      const obj: any = {
         uuid,
         activeCode: '',
-        isActive: false
+        isActive: false,
+        'APP-Licenses-Code': ''
       }
 
       // 尝试重新从远端或本地拉取匹配
@@ -188,9 +189,8 @@ QQIDAQAB
         if (code && this.verifyLicense(code, uuid)) {
           obj.activeCode = code
           obj.isActive = true
-          on({
-            'APP-Licenses-Code': obj.activeCode
-          })
+          obj['APP-Licenses-Code'] = code
+          global.Server.Licenses = code
           resolve(obj)
           return
         }
@@ -201,22 +201,17 @@ QQIDAQAB
       if (localLicense && this.verifyLicense(localLicense, uuid)) {
         obj.activeCode = localLicense
         obj.isActive = true
-        on({
-          'APP-Licenses-Code': obj.activeCode
-        })
+        obj['APP-Licenses-Code'] = localLicense
         resolve(obj)
         return
       }
 
-      on({
-        'APP-Licenses-Code': ''
-      })
       resolve(obj)
     })
   }
 
   licensesVerify(license: string) {
-    return new ForkPromise(async (resolve, reject, on) => {
+    return new ForkPromise(async (resolve, reject) => {
       let uuid = ''
       try {
         uuid = await machineId()
@@ -230,17 +225,27 @@ QQIDAQAB
         return
       }
       if (this.verifyLicense(trimmed, uuid)) {
-        on({
-          'APP-Licenses-Code': trimmed
-        })
+        global.Server.Licenses = trimmed
         resolve({
           uuid,
           activeCode: trimmed,
-          isActive: true
+          isActive: true,
+          'APP-Licenses-Code': trimmed
         })
       } else {
         reject(new Error('激活码无效或与本机 UUID 不匹配'))
       }
+    })
+  }
+
+  licensesClear() {
+    return new ForkPromise(async (resolve) => {
+      global.Server.Licenses = ''
+      resolve({
+        activeCode: '',
+        isActive: false,
+        'APP-Licenses-Code': ''
+      })
     })
   }
 

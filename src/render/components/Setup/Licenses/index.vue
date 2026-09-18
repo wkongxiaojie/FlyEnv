@@ -6,12 +6,24 @@
           <template #header>
             <div class="flex items-center justify-between">
               <span>{{ I18nT('licenses.currentLicenseState') }}</span>
-              <el-tag v-if="store.isActive" type="success" effect="dark">
-                {{ I18nT('licenses.licenseActivated') }}
-              </el-tag>
-              <el-tag v-else type="danger" effect="dark">
-                {{ I18nT('licenses.licenseNoActivated') }}
-              </el-tag>
+              <div class="flex items-center gap-2">
+                <el-button
+                  v-if="store.isActive"
+                  type="danger"
+                  size="small"
+                  plain
+                  :loading="store.fetching"
+                  @click="doClear"
+                >
+                  清除许可证
+                </el-button>
+                <el-tag v-if="store.isActive" type="success" effect="dark">
+                  {{ I18nT('licenses.licenseActivated') }}
+                </el-tag>
+                <el-tag v-else type="danger" effect="dark">
+                  {{ I18nT('licenses.licenseNoActivated') }}
+                </el-tag>
+              </div>
             </div>
           </template>
           <template #default>
@@ -63,6 +75,16 @@
                   clearable
                 />
                 <div class="flex gap-2 justify-end">
+                  <el-button
+                    v-if="store.isActive"
+                    type="danger"
+                    plain
+                    :loading="store.fetching"
+                    :disabled="store.fetching"
+                    @click="doClear"
+                  >
+                    清除许可证
+                  </el-button>
                   <el-button
                     type="primary"
                     :loading="store.fetching"
@@ -295,6 +317,9 @@
   }
   const doRefresh = () => {
     store.refreshState()
+  }
+  const doClear = () => {
+    store.clearLicense()
   }
   const doManualActivate = () => {
     store.manualActivate(manualCode.value).then(() => {

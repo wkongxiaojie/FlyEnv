@@ -65,10 +65,12 @@ export const SetupStore = defineStore('setup', {
           time = Math.round(new Date().getTime() / 1000)
           localStorage.setItem('flyenv-init-time', `${time}`)
         }
-        IPC.send('app-fork:app', 'licensesInit').then((key: string, res?: any) => {
-          if (res?.code !== 200) {
-            IPC.off(key)
+        const manuallyCleared = localStorage.getItem('flyenv-license-manually-cleared') === 'true'
+        IPC.send('app-fork:app', 'licensesInit', !manuallyCleared).then((key: string, res?: any) => {
+          if (res?.code === 200) {
+            return
           }
+          IPC.off(key)
           console.log('licensesInit: ', res)
           if (res?.code === 0) {
             const data: any = res?.data
@@ -90,13 +92,16 @@ export const SetupStore = defineStore('setup', {
         return
       }
       this.fetching = true
+      localStorage.removeItem('flyenv-license-manually-cleared')
       IPC.send('app-fork:app', 'licensesState').then((key: string, res?: any) => {
-        if (res?.code !== 200) {
-          IPC.off(key)
+        if (res?.code === 200) {
+          return
         }
+        IPC.off(key)
         this.fetching = false
         if (res?.code === 1) {
-          MessageError(res?.msg ?? I18nT('base.fail'))
+          const errorMsg = typeof res?.msg === 'string' ? res.msg : I18nT('base.fail')
+          MessageError(errorMsg)
           return
         }
         console.log('refreshState: ', res)
@@ -127,9 +132,13 @@ export const SetupStore = defineStore('setup', {
       this.fetching = true
       return new Promise<void>((resolve, reject) => {
         IPC.send('app-fork:app', 'licensesVerify', trimmed).then((key: string, res?: any) => {
+          if (res?.code === 200) {
+            return
+          }
           IPC.off(key)
           this.fetching = false
           if (res?.code === 0 && res?.data?.isActive) {
+            localStorage.removeItem('flyenv-license-manually-cleared')
             this.activeCode = res.data.activeCode
             this.isActive = true
             const store = AppStore()
@@ -138,29 +147,66 @@ export const SetupStore = defineStore('setup', {
             ElMessage.success(I18nT('licenses.licenseActivated'))
             resolve()
           } else {
-            MessageError(res?.msg || I18nT('base.fail'))
-            reject(new Error(res?.msg))
+            const errorMsg =
+              typeof res?.msg === 'string'
+                ? res.msg
+                : typeof res?.data?.msg === 'string'
+                  ? res.data.msg
+                  : I18nT('licenses.licenseNoActivated')
+            MessageError(errorMsg)
+            reject(new Error(errorMsg))
           }
         })
       })
+    },
+    clearLicense() {
+      if (this.fetching) {
+        return Promise.reject()
+      }
+      return ElMessageBox.confirm(
+        '确定要清除本地许可证吗？清除后软件将恢复为未激活状态，可用于测试未激活限制或重新激活。',
+        '清除许可证',
+        {
+          confirmButtonText: I18nT('base.confirm'),
+          cancelButtonText: I18nT('base.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          this.fetching = true
+          localStorage.setItem('flyenv-license-manually-cleared', 'true')
+          return new Promise<void>((resolve) => {
+            IPC.send('app-fork:app', 'licensesClear').then((key: string, res?: any) => {
+              if (res?.code === 200) {
+                return
+              }
+              IPC.off(key)
+              this.fetching = false
+              this.activeCode = ''
+              this.isActive = false
+              const store = AppStore()
+              store.config.setup.license = ''
+              store.saveConfig().then().catch()
+              ElMessage.success('许可证已清除，已恢复为未激活状态')
+              resolve()
+            })
+          })
+        })
+        .catch(() => {})
     },
     postRequest() {
       if (this.fetching) {
         return
       }
-      this.fetching = true
       const msg = this.message.trim()
       localStorage.setItem('flyenv-licenses-post-message', msg)
-      IPC.send('app-fork:app', 'licensesRequest', msg).then((key: string, res?: any) => {
-        IPC.off(key)
-        console.log('postRequest: ', res)
-        this.fetching = false
-        if (res?.code === 1) {
-          MessageError(res?.msg ?? I18nT('base.fail'))
-          return
-        }
-        ElMessage.success(I18nT('setup.requestedTips'))
-      })
+      const issueTitle = encodeURIComponent(`[License Request] ${this.uuid}`)
+      const issueBody = encodeURIComponent(
+        `### 许可证申请 (License Request)\n\n- **UUID**: \`${this.uuid}\`\n- **申请说明**: ${msg || '无'}\n\n---\n*请仓库管理员核实后在 licenses.json 中签发激活码。*`
+      )
+      const githubIssueUrl = `https://github.com/wkongxiaojie/FlyEnv/issues/new?title=${issueTitle}&body=${issueBody}`
+      shell.openExternal(githubIssueUrl)
+      ElMessage.success('已打开 GitHub Issue 申请页面！')
     },
     githubInfoSave() {
       localForage

@@ -244,9 +244,10 @@ export default class IPCHandler extends EventEmitter {
     this.deps.windowManager.sendCommandTo(win, command, key, info)
 
     // 处理许可证码
-    if (info?.data?.['APP-Licenses-Code']) {
+    if (info?.data && typeof info.data['APP-Licenses-Code'] === 'string') {
       const code: string = info.data['APP-Licenses-Code']
       this.deps.configManager?.setConfig('setup.license', code)
+      this.deps.serverManager.updateGlobalConfig()
       this.deps.windowManager.sendCommandTo(
         this.deps.mainWindow!,
         'APP-License-Need-Update',
